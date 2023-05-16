@@ -1,16 +1,19 @@
 from datetime import datetime
 
-from django.shortcuts import HttpResponse, redirect
+from django.shortcuts import render
+from django.shortcuts import render
+from product.models import Product
 
-def hello_view(request):
-    if request.method == "GET":
-        return HttpResponse("Hello! Its my project")
 
-def time_view(request):
+def main_page_view(request):
     if request.method == 'GET':
-        now_date = datetime.now()
-        return HttpResponse(now_date)
+        return render(request, 'layouts/index.html')
 
-def good_by_view(request):
-    if request.method =='GET':
-        return HttpResponse('Goodby user!')
+
+def products_view(request):
+    if request.method == 'GET':
+        product = Product.objects.all()
+        context = {
+            'product': product
+        }
+        return render(request, 'product/products.html', context=context)
